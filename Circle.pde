@@ -27,7 +27,7 @@ class Circle implements Shape
        
        float t1 = (-b - discriminant)/(2*a);
        
-       if (IsGreaterOrEqualWithEpsilon(t1, 0)) //<>//
+       if (IsGreaterOrEqualWithEpsilon(t1, 0))
        {
            float posX = ray.m_StartPos.x + (t1 * (ray.m_Dir.x));
            float posY = ray.m_StartPos.y + (t1 * (ray.m_Dir.y));

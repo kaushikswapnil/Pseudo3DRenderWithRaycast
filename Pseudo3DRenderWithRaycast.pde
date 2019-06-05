@@ -1,5 +1,5 @@
 ArrayList<Shape> obstacles;
-Particle particle;
+CameraParticle particle;
 
 float screen1Width = 400;
 float screen1Height = 800;
@@ -8,6 +8,8 @@ float screen2Width = 400;
 float screen2Height = 800;
 
 float wallHeight = 300;
+
+float camRotationAngle = PI/24;
 
 void setup()
 {
@@ -34,12 +36,13 @@ void setup()
      }
   }
   
+  //Boundary obstacles
   obstacles.add(new Line(new PVector(0, 0), new PVector(0, screen1Height)));
   obstacles.add(new Line(new PVector(0, 0), new PVector(screen1Width, 0)));
   obstacles.add(new Line(new PVector(screen1Width, 0), new PVector(screen1Width, screen1Height)));
   obstacles.add(new Line(new PVector(0, screen1Height), new PVector(screen1Width, screen1Height)));
   
-  particle = new CameraParticle(PVector.fromAngle(0), screen1Width/2, screen1Height/2, 20, PI/3, 120);
+  particle = new CameraParticle(PVector.fromAngle(0), screen1Width/2, screen1Height/2, 20, PI/3, 200);
 }
 
 void draw()
@@ -56,6 +59,22 @@ void draw()
    for (Shape shape : obstacles)
    {
       shape.Display(); 
+   }
+}
+
+void keyPressed()
+{
+   if (key == 'a' || key == 'A')
+   {
+     particle.Rotate(camRotationAngle);
+   }
+   else if (key == 'd' || key == 'D')
+   {
+     particle.Rotate(-camRotationAngle);
+   }
+   else if(key == 'w' || key == 'W')
+   {
+     particle.ChangeFOV(camRotationAngle); 
    }
 }
 
