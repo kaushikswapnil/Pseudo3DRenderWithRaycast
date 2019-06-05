@@ -99,6 +99,8 @@ class CameraParticle extends Particle
       float minScreen1Dimension = min(screen1Width, screen1Height);
       float sliceWidth = screen2Width/scene.length;
       
+      float granularity = (int)map(m_FieldOfView, camRotationAngle, TWO_PI, 0, 10);
+      
       for (int sceneIter = 0; sceneIter < scene.length; ++sceneIter)
       {
          float objDist = scene[sceneIter];
@@ -111,7 +113,7 @@ class CameraParticle extends Particle
          
          noStroke();
          fill(255, alpha);
-         rect(posX, screen2Height/2, sliceWidth + 4, objHeight);
+         rect(posX, screen2Height/2, sliceWidth + granularity, objHeight);
       }
   }
 }
