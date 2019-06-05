@@ -108,6 +108,8 @@ class CameraParticle extends Particle
       
       ContactPoint testContactPoint = new ContactPoint(0, 0);
       
+      float maxScreen1Dimension = max(screen1Width, screen1Height);
+      
       for (int iter = 0; iter < m_Rays.size(); ++iter)
       {
          Ray ray = m_Rays.get(iter);
@@ -125,9 +127,12 @@ class CameraParticle extends Particle
            //Produces fish eye effect
            //scene[iter] = PVector.dist(m_Position, testContactPoint.m_Position);
          }
+         else
+         {
+            scene[iter] = maxScreen1Dimension; //Think infinity 
+         }
       }
-      
-      float maxScreen1Dimension = max(screen1Width, screen1Height);
+     
       float minScreen1Dimension = min(screen1Width, screen1Height);
       
       for (int sceneIter = 0; sceneIter < scene.length; ++sceneIter)
