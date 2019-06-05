@@ -99,7 +99,7 @@ class CameraParticle extends Particle
       float minScreen1Dimension = min(screen1Width, screen1Height);
       float sliceWidth = screen2Width/scene.length;
       
-      float granularity = (int)map(m_FieldOfView, camRotationAngle, TWO_PI, 0, 10);
+      float granularity = 1;//(int)map(m_FieldOfView, camRotationAngle, TWO_PI, 0, 10);
       
       for (int sceneIter = 0; sceneIter < scene.length; ++sceneIter)
       {

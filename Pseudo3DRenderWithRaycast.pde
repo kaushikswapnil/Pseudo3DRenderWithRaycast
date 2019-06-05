@@ -49,11 +49,6 @@ void draw()
 {
    background(0); 
    
-   //particle.m_Position.x = mouseX;
-   //particle.m_Position.y = mouseY;
-   
-   particle.Display();
-   
    particle.Update(obstacles);
    
    for (Shape shape : obstacles)
