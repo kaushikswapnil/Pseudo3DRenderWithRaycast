@@ -66,15 +66,19 @@ void keyPressed()
 {
    if (key == 'a' || key == 'A')
    {
-     particle.Rotate(camRotationAngle);
+     particle.Rotate(-camRotationAngle);
    }
    else if (key == 'd' || key == 'D')
    {
-     particle.Rotate(-camRotationAngle);
+     particle.Rotate(camRotationAngle);
    }
    else if(key == 'w' || key == 'W')
    {
      particle.ChangeFOV(camRotationAngle); 
+   }
+   else if(key == 's' || key == 'S')
+   {
+     particle.ChangeFOV(-camRotationAngle); 
    }
 }
 
