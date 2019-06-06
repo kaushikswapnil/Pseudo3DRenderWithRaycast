@@ -2,12 +2,14 @@ class CameraParticle extends Particle
 {
   float m_FieldOfView;
   PVector m_Heading;
+  int m_Filter; // 0 = standard, we project the dist of the obj onto cam heading, 1 = fish eye, using raw euclidean dist
   
   CameraParticle(PVector heading, float posX, float posY, float radius, float fieldOfView, int numRaysPerRadianSlice)
   {
       super(posX, posY, radius);
       m_Heading = heading;
       m_FieldOfView = Limit(fieldOfView, 0, TWO_PI);
+      m_Filter = 0;
       
       CreateRays(numRaysPerRadianSlice);
   }
@@ -29,6 +31,11 @@ class CameraParticle extends Particle
       
        angle += angleIncrement; 
     }
+  }
+  
+  void ChangeFilter()
+  {
+     m_Filter = ++m_Filter % 2; //keep changing between 0 and 1 
   }
   
   void ChangeFOV(float theta)
@@ -82,13 +89,28 @@ class CameraParticle extends Particle
            stroke(255, 120);
            //point(testContactPoint.m_Position.x, testContactPoint.m_Position.y);
            line(m_Position.x, m_Position.y, testContactPoint.m_Position.x, testContactPoint.m_Position.y);
-           PVector contactPointRelToPos = PVector.sub(testContactPoint.m_Position, m_Position);
            
-           float contactPointProjectedOnHeading = PVector.dot(contactPointRelToPos, m_Heading);
+           switch (m_Filter)
+           {
+              case 0:
+              PVector contactPointRelToPos = PVector.sub(testContactPoint.m_Position, m_Position);
+              float contactPointProjectedOnHeading = PVector.dot(contactPointRelToPos, m_Heading);
+              scene[iter] = contactPointProjectedOnHeading;
+              break;
+              
+              case 1:
+              scene[iter] = PVector.dist(m_Position, testContactPoint.m_Position);
+              break;
+              
+              default:
+              println("Unhandled filter in camera particle");
+              break;
+           }
            
-           scene[iter] = contactPointProjectedOnHeading;
+           
+           
            //Produces fish eye effect
-           //scene[iter] = PVector.dist(m_Position, testContactPoint.m_Position);
+           //
          }
          else
          {

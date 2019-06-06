@@ -11,6 +11,8 @@ float wallHeight = 300;
 
 float camRotationAngle = PI/24;
 
+float minLineLength = 40;
+
 void setup()
 {
   size(1200, 800);
@@ -26,7 +28,15 @@ void setup()
   {
      if (random(2) - 1 < 0)
      {
-       obstacles.add(new Line(new PVector(random(screen1Width), random(screen1Height)), new PVector(random(screen1Width), random(screen1Height))));
+       PVector lineStart = new PVector(random(screen1Width), random(screen1Height));
+       PVector lineEnd =  new PVector(random(screen1Width), random(screen1Height));
+       
+       while (IsLesserWithEpsilon(PVector.dist(lineStart, lineEnd), minLineLength))
+       {
+         lineEnd =  new PVector(random(screen1Width), random(screen1Height));
+       }
+       
+       obstacles.add(new Line(lineStart, lineEnd));
      }
      else
      {
@@ -74,6 +84,10 @@ void keyPressed()
    else if(key == 's' || key == 'S')
    {
      particle.ChangeFOV(-camRotationAngle); 
+   }
+   else if (key == ' ')
+   {
+     particle.ChangeFilter(); 
    }
 }
 
